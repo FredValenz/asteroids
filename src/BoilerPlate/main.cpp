@@ -1,6 +1,6 @@
 /*
-* @author Freddy Valenzuela
-* @version 0.0.1
+ * @author Raul Roa
+ * @version v0.0.3
 */
 
 #if _MSC_VER && _DEBUG
@@ -14,7 +14,6 @@
 
 // 
 #include "App.hpp"
-#include "MathUtilities.h"
 
 const int WIDTH = 1136;
 const int HEIGHT = 640;

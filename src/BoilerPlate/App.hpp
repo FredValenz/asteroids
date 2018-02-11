@@ -10,6 +10,10 @@
 #include "SDLEvent.hpp"
 #include "TimeManager.hpp"
 
+//
+#include "Player.hpp"
+#include "Color.h"
+
 namespace Engine
 {
 	class App : public SDLEvent
@@ -57,6 +61,7 @@ namespace Engine
 		/* =============================================================
 		 * MEMBERS
 		 * ============================================================= */
+		Game::Player*						m_player;
 		int									m_width;
 		int									m_height;
 		int									m_nUpdates;
@@ -66,7 +71,8 @@ namespace Engine
 		SDL_GLContext						m_context;
 		GameState::State					m_state;
 		Engine::TimeManager*				m_timer;
+		Color								m_backgroundColor;
 
-	};
+			};
 }
 #endif /* GAME_HPP */

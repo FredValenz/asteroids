@@ -1,9 +1,14 @@
 #pragma once
+
+#include "Vector4.hpp"
+
 static class Color
 {
-	int red, green, blue, alpha;
 public:
 	Color();
-	Color(int,int,int);
+	Color(float, float, float, float);
+
+	Engine::Math::Vector4 m_color;
+
 };
 

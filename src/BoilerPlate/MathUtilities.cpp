@@ -23,15 +23,15 @@ namespace Engine {
 			return x;
 		}
 
-		static float MathUtilities::degreeToRad(float param)
+		double MathUtilities::degreeToRad(double param)
 		{
-			float x = (param * 3.14159) / 180;
+			double x = (param * 3.14159) / 180;
 			return x;
 		}
 
-		static float MathUtilities::radToDeg(float param)
+		double MathUtilities::radToDeg(double param)
 		{
-			float x = (param * 180) / 3.14159;
+			double x = (param * 180) / 3.14159;
 			return x;
 		}
 
@@ -72,6 +72,3 @@ namespace Engine {
 		}
 	}
 }
-
-
-

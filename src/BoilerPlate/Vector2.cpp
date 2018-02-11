@@ -1,4 +1,4 @@
-#include "Vector2.h"
+#include "Vector2.hpp"
 #include <cmath>
 
 namespace Engine
@@ -8,24 +8,24 @@ namespace Engine
 		Vector2 Vector2::Origin = Vector2();
 
 		Vector2::Vector2()
-			: x(0.0f)
-			, y(0.0f)
-			, length(0.0f)
+			: x		 ( 0.0f )
+			, y		 ( 0.0f )
+			, length ( 0.0f )
 		{}
 
 		Vector2::Vector2(float _x, float _y)
-			: x(_x)
-			, y(_y)
-			, length(0.0f)
+			: x		 ( _x )
+			, y		 ( _y )
+			, length ( 0.0f )
 		{
 			// Calculate Length
 			Length();
 		}
 
 		Vector2::Vector2(float _uniform)
-			: x(_uniform)
-			, y(_uniform)
-			, length(0.0f)
+			: x		 ( _uniform )
+			, y		 ( _uniform )
+			, length ( 0.0f )
 		{
 			// Calculate Length
 			Length();
@@ -104,7 +104,7 @@ namespace Engine
 		{
 			return Vector2(
 				x + rhs.x,
-				y + rhs.y);
+				y + rhs.y);			
 		}
 
 		Vector2 Vector2::operator-(const Vector2& rhs) const
@@ -133,7 +133,7 @@ namespace Engine
 
 		bool Vector2::operator==(const Vector2& rhs) const
 		{
-			return
+			return 
 				x == rhs.x &&
 				y == rhs.y;
 		}

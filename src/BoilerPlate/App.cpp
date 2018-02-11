@@ -2,14 +2,14 @@
 #include <iostream>
 #include <algorithm>
 
-// OpenGL includes
-#include <GL/glew.h>
-#include <SDL2/SDL_opengl.h>
+#include "IncludeGL.hpp"
 
 namespace Engine
 {
 	const float DESIRED_FRAME_RATE = 60.0f;
 	const float DESIRED_FRAME_TIME = 1.0f / DESIRED_FRAME_RATE;
+
+	float movingUnit = 10.0f;
 
 	App::App(const std::string& title, const int width, const int height)
 		: m_title(title)
@@ -19,15 +19,21 @@ namespace Engine
 		, m_timer(new TimeManager)
 		, m_mainWindow(nullptr)
 	{
-		m_game = new Asteroids::Game(width, height);
 		m_state = GameState::UNINITIALIZED;
 		m_lastFrameTime = m_timer->GetElapsedTimeInSeconds();
+
+		//
+		m_player = new Game::Player(m_width, m_height);
+		m_backgroundColor = Color(0.3f,0.20,0.23,1);
+
 	}
 
 	App::~App()
 	{
-		// Eliminating pointer to game
-		delete m_game;
+		if (m_player)
+		{
+			delete m_player;
+		}
 
 		CleanupSDL();
 	}
@@ -85,34 +91,29 @@ namespace Engine
 		switch (keyBoardEvent.keysym.scancode)
 		{
 		case SDL_SCANCODE_W:
-			m_game->m_player->MoveForward();
+			SDL_Log("Going up!");
+			m_player->Move(
+				Engine::Math::Vector2(0.0f, movingUnit));
 			break;
 		case SDL_SCANCODE_A:
-			m_game->m_player->MoveLeft();
-			break;
-		case SDL_SCANCODE_S:
-			// Nothing
+			SDL_Log("Going left!");
+			m_player->Move(
+				Engine::Math::Vector2(-movingUnit, 0.0f));
 			break;
 		case SDL_SCANCODE_D:
-			m_game->m_player->MoveRight();
+			SDL_Log("Going right!");
+			m_player->Move(
+				Engine::Math::Vector2(movingUnit, 0.0f));
 			break;
-		case SDL_SCANCODE_UP:
-			m_game->m_player->MoveForward();
+		case SDL_SCANCODE_S:
+			SDL_Log("Going down!");
+			m_player->Move(
+				Engine::Math::Vector2(0.0f, -movingUnit));
 			break;
-		case SDL_SCANCODE_LEFT:
-			m_game->m_player->MoveLeft();
-			break;
-		case SDL_SCANCODE_RIGHT:
-			m_game->m_player->MoveRight();
-			break;
-		case SDL_SCANCODE_DOWN:
-			// Nothing
-			break;
-		case SDL_SCANCODE_P:
-			// Nothing
-			break;
-		default:
-			SDL_Log("%S was pressed.", keyBoardEvent.keysym.scancode);
+		default:			
+			SDL_Log("Physical %s key acting as %s key",
+				SDL_GetScancodeName(keyBoardEvent.keysym.scancode),
+				SDL_GetKeyName(keyBoardEvent.keysym.sym));
 			break;
 		}
 	}
@@ -123,17 +124,6 @@ namespace Engine
 		{
 		case SDL_SCANCODE_ESCAPE:
 			OnExit();
-			break;
-		case SDL_SCANCODE_W:
-			break;
-		case SDL_SCANCODE_A:
-			break;
-		case SDL_SCANCODE_S:
-			break;
-		case SDL_SCANCODE_D:
-			break;
-		case SDL_SCANCODE_P:
-			//m_game->ChangePlayerModel();
 			break;
 		default:
 			//DO NOTHING
@@ -146,15 +136,7 @@ namespace Engine
 		double startTime = m_timer->GetElapsedTimeInSeconds();
 
 		// Update code goes here
-		if (m_game)
-		{
-			// Updating game
-			m_game->Update(DESIRED_FRAME_RATE);
-
-			// Checking game run state
-			if (m_game->Finished() != Asteroids::Game::GameState::State::RUNNING)
-				OnExit();
-		}
+		//
 
 		double endTime = m_timer->GetElapsedTimeInSeconds();
 		double nextTimeFrame = startTime + DESIRED_FRAME_TIME;
@@ -172,21 +154,19 @@ namespace Engine
 		m_nUpdates++;
 	}
 
+
+
 	void App::Render()
 	{
-		// Background color
-		glClearColor(0.1f, 0.1f, 0.15f, 1.0f);
-
-		//
+		glClearColor(m_backgroundColor.m_color.x, 
+					m_backgroundColor.m_color.y,
+					m_backgroundColor.m_color.z,
+					m_backgroundColor.m_color.w
+		);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		//Rendering current frame in game
-		if (m_game != NULL)
-		{
-			m_game->Render();
-		}
-
-		// Sending to window
+		m_player->Render();// Loads the identity matrix
+		
 		SDL_GL_SwapWindow(m_mainWindow);
 	}
 
@@ -203,9 +183,9 @@ namespace Engine
 		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 		SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 
-		Uint32 flags = SDL_WINDOW_OPENGL |
-			SDL_WINDOW_SHOWN |
-			SDL_WINDOW_RESIZABLE;
+		Uint32 flags =  SDL_WINDOW_OPENGL     | 
+						SDL_WINDOW_SHOWN      | 
+						SDL_WINDOW_RESIZABLE;
 
 		m_mainWindow = SDL_CreateWindow(
 			m_title.c_str(),

@@ -4,18 +4,20 @@
 
 Color::Color()
 {
-	red = 0;
-	green = 0;
-	blue = 0;
-	alpha = 255;
+	m_color.x = 0;
+	m_color.y = 0;
+	m_color.z = 0;
+	m_color.w = 255;
 }
 
 
-Color::Color(int r, int g, int b)
+Color::Color(float r, float g, float b, float a)
 {
-	red = r;
-	green = g;
-	blue = b;
-	alpha = 255;
-	
+	m_color.x = r;
+	m_color.y = g;
+	m_color.z = b;
+	m_color.w = a;
+
 }
+
+

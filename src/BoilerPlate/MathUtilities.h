@@ -10,8 +10,8 @@ namespace Engine {
 			~MathUtilities();
 			int floatToInt(float);
 			float intToFloat(int);
-			static float radToDeg(float);
-			static float degreeToRad(float);
+			double radToDeg(double);
+			double degreeToRad(double);
 			template<class T> T getMax(T a[]);
 			template<class T> T getMin(T a[]);
 			template<class T> T clamp(T, T, T);
@@ -21,6 +21,3 @@ namespace Engine {
 		};
 	}
 }
-
-
-

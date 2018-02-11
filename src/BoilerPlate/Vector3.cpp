@@ -1,6 +1,10 @@
-#include "Vector3.h"
+#include "Vector3.hpp"
+
+// std includes
 #include <cmath>
-#include "Vector2.h"
+
+//
+#include "Vector2.hpp"
 
 namespace Engine
 {
@@ -9,36 +13,36 @@ namespace Engine
 		Vector3 Vector3::Origin = Vector3();
 
 		Vector3::Vector3()
-			: x(0.0f)
-			, y(0.0f)
-			, z(0.0f)
-			, length(0.0f)
+			: x      ( 0.0f )
+			, y      ( 0.0f )
+			, z      ( 0.0f )
+			, length ( 0.0f )
 		{}
 
 		Vector3::Vector3(float _x, float _y, float _z)
-			: x(_x)
-			, y(_y)
-			, z(_z)
-			, length(0.0f)
+			: x      ( _x )
+			, y      ( _y )
+			, z      ( _z )
+			, length ( 0.0f )
 		{
 			// Calculate Length
 			Length();
 		}
 
 		Vector3::Vector3(float _uniform)
-			: x(_uniform)
-			, y(_uniform)
-			, z(_uniform)
-			, length(0.0f)
+			: x      ( _uniform )
+			, y      ( _uniform )
+			, z      ( _uniform )
+			, length ( 0.0f )
 		{
 			// Calculate Length
 			Length();
 		}
 
 		Vector3::Vector3(const Vector2& vec2)
-			: x(vec2.x)
-			, y(vec2.y)
-			, z(0.0f)
+			: x( vec2.x )
+			, y( vec2.y )
+			, z( 0.0f )
 			, length(0.0f)
 		{
 			// Calculate Length
