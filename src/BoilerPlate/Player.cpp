@@ -43,15 +43,15 @@ namespace Game
 
 		// Draws the player ship
 		glBegin(GL_LINE_LOOP);
-			glVertex2f(-11.0f, -11.0f);
-			glVertex2f(-13.0f, 12.0f);
-			glVertex2f(-12.0f, 16.0f);
-			glVertex2f(10.0f, 13.0f);
-			glVertex2f(12.0f, 16.0f);
-			glVertex2f(13.0f, 12.0f);
-			glVertex2f(11.0f, -11.0f);
-			glVertex2f(10.0f, 10.0f);
-			glVertex2f(-11.0f, -11.0f);
+			glVertex2f(4.0f, -12.0f);
+			glVertex2f(8.0f, -16.0f);
+			glVertex2f(24.0f, 16.0f);
+			glVertex2f(8.0f, 8.0f);
+			glVertex2f(0.0f, 28.0f);
+			glVertex2f(-8.0f, 8.0f);
+			glVertex2f(-24.0f, 16.0f);
+			glVertex2f(-8.0f, -16.0f);
+			glVertex2f(-4.0f, -12.0f);
 		glEnd();
 	}
 }
