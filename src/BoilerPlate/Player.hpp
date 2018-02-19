@@ -1,39 +1,48 @@
 #pragma once
-#ifndef _PLAYER_H_
-#define _PLAYER_H_
+#ifndef _PLAYER_HPP_
+#define _PLAYER_HPP_
 
 #include "Vector2.hpp"
+#include "Entity.hpp"
+#include "MathUtilities.hpp"
 
-namespace Game
+namespace Asteroids
 {
-
-	class Player
+	namespace Entities
 	{
-	public:
-		/* ==========================
-		* CTOR
-		* ==========================*/
-		Player(int, int);
+		class Player : Entity
+		{
+		public:
+			/* ==========================
+			* CTOR
+			* ==========================*/
+			Player(int, int);
 
-		/* ==========================
-		* PUBLIC FUNCTIONS
-		* ==========================*/
-		void Update      ( void );
-		void Render      ( void );
-		void Move        ( const Engine::Math::Vector2& unit );
-		void MoveForward ( void );
-		void Rotateleft  ( void );
-		void RotateRight ( void );
-	private:
-		/* ==========================
-		* MEMBERS
-		* ==========================*/
-		Engine::Math::Vector2* m_position;
-		float m_maxWidth;
-		float m_minWidth;
-		float m_maxHeight;
-		float m_minHeight;
-	};
+			/* ==========================
+			* PUBLIC FUNCTIONS
+			* ==========================*/
+			void Update(float);
+			void Render(void);
+			void Move(const Engine::Math::Vector2& unit);
+			void MoveForward(void);
+			void RotateRight();
+			void RotateLeft();
+			void notMoving() { m_moving = false; };
+
+		private:
+
+
+			/* ==========================
+			* MEMBERS
+			* ==========================*/
+			Engine::Math::Vector2 m_velocity;
+			Engine::Math::Vector2 m_position;
+			float m_angle;
+			bool m_thruster;
+			bool m_moving;
+		};
+	}
+	
 }
 
-#endif // !_PLAYER_H_
+#endif // !_PLAYER_HPP_

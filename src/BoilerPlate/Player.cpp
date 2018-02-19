@@ -1,48 +1,69 @@
 #include "Player.hpp"
 #include "IncludeGL.hpp"
 
-namespace Game
+namespace Asteroids
 {
-	inline float warp(float x, float min, float max)
-	{
-		if (x < min) return max - (min - x);
-		if (x > max) return min + (x - max);
-		return x;
-	}
+	namespace Entities {
 
-	Player::Player(int width, int height)
-	{
-		m_position =
-			new Engine::Math::Vector2(Engine::Math::Vector2::Origin);
+		Player::Player(int width, int height)
+			: m_angle(0.0)
+			, m_thruster(false)
+			, m_moving(false)
+			, m_velocity(Engine::Math::Vector2())
+		{
+			m_radius = 0.0f;
+			m_position = Engine::Math::Vector2(Engine::Math::Vector2::Origin);
 
-		m_maxWidth = width / 2.0f;
-		m_minWidth = -width / 2.0f;
+			m_width = width + 50.0f;
+			m_height = height + 50.0f;
+			m_mass = 0.5f;
+		}
 
-		m_maxHeight = height / 2.0f;
-		m_minHeight = -height / 2.0f;
-	}
+		void Player::Update(float deltaTime)
+		{
+			if (!m_moving) m_thruster = false;
 
-	void Player::Update()
-	{}
+			m_velocity = Engine::Math::Vector2(m_velocity.x * Constants::DRAG, m_velocity.y * Constants::DRAG);
 
-	void Player::Move(const Engine::Math::Vector2& unit)
-	{
-		float x = m_position->x + unit.x;
-		float y = m_position->y + unit.y;
-		
-		m_position->x = warp(x, m_minWidth, m_maxWidth);
-		m_position->y = warp(y, m_minHeight, m_maxHeight);
-	}
+			Engine::Math::Vector2 pos = m_position + m_velocity;
 
-	void Player::Render()
-	{
-		glLoadIdentity();
+			Entity::Update(deltaTime);
+		}
 
-		// Translates a vector
-		glTranslatef(m_position->x, m_position->y, 0.0f);
+		/*
+		void Player::Move(const Engine::Math::Vector2& unit)
+		{
+			float x = m_position->x + unit.x;
+			float y = m_position->y + unit.y;
 
-		// Draws the player ship
-		glBegin(GL_LINE_LOOP);
+			m_position->x = warp(x, m_minWidth, m_maxWidth);
+			m_position->y = warp(y, m_minHeight, m_maxHeight);
+		}
+		*/
+		void Player::MoveForward()
+		{
+			m_thruster = true;
+			m_moving = true;
+
+			ApplyImpulse();
+		}
+
+		void Player::Render()
+		{
+			glLoadIdentity();
+
+
+			
+
+			// Translates a vector
+			glTranslatef(m_position.x, m_position.y, 0.0f);
+
+			// Rotates matrix
+			glRotatef(m_angle, 0.0f, 0.0f, 1.0f);
+
+
+			// Draws the player ship
+			glBegin(GL_LINE_LOOP);
 			glVertex2f(4.0f, -12.0f);
 			glVertex2f(8.0f, -16.0f);
 			glVertex2f(24.0f, 16.0f);
@@ -52,6 +73,31 @@ namespace Game
 			glVertex2f(-24.0f, 16.0f);
 			glVertex2f(-8.0f, -16.0f);
 			glVertex2f(-4.0f, -12.0f);
-		glEnd();
+			glEnd();
+
+			if (m_thruster)
+			{
+				// Draws ship's thruster
+				glBegin(GL_LINE_LOOP);
+				glVertex2f(4.0f, -12.0f);
+				glVertex2f(0.0f, -24.0f);
+				glVertex2f(-4.0f, -12.0f);
+				glEnd();
+			}
+		}
+
+
+		void Player::RotateRight()
+		{
+			m_angle += -5.0f;
+			Engine::Math::MathUtilities::degreeToRad(m_angle);
+		}
+
+		void Player::RotateLeft()
+		{
+			m_angle += 5.0f;
+			Engine::Math::MathUtilities::degreeToRad(m_angle);
+		}
 	}
+
 }

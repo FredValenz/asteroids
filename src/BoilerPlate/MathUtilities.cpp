@@ -1,12 +1,16 @@
-#include "MathUtilities.h"
+#include "MathUtilities.hpp"
 #include <algorithm>
 #include <array>
 #include <stdlib.h>
-#include <math.h>
+#include <cmath>
 
 namespace Engine {
 
 	namespace Math {
+
+		const float PI = 3.14159265f;
+
+
 
 		MathUtilities::MathUtilities()
 		{
@@ -23,15 +27,15 @@ namespace Engine {
 			return x;
 		}
 
-		double MathUtilities::degreeToRad(double param)
+		float MathUtilities::degreeToRad(float param)
 		{
-			double x = (param * 3.14159) / 180;
+			float x = (param * PI) / 180;
 			return x;
 		}
 
-		double MathUtilities::radToDeg(double param)
+		float MathUtilities::radToDeg(float param)
 		{
-			double x = (param * 180) / 3.14159;
+			float x = (param * 180) / PI;
 			return x;
 		}
 

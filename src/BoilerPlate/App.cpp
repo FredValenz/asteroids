@@ -22,10 +22,12 @@ namespace Engine
 		m_state = GameState::UNINITIALIZED;
 		m_lastFrameTime = m_timer->GetElapsedTimeInSeconds();
 
-		//
-		m_player = new Game::Player(m_width, m_height);
-		m_backgroundColor = Color(0.3f,0.20,0.23,1);
-
+		//Crear player y background color
+		m_player = new Asteroids::Entities::Player(m_width, m_height);
+		m_asteroid = new Asteroids::Entities::Asteroid(m_width, m_height);
+		//m_backgroundColor = Color(0.3f,0.20f,0.23f,1.0f);
+		
+		m_backgroundColor = Color(0.218f, 0.112f, 0.214f, 1.0f);
 	}
 
 	App::~App()
@@ -33,6 +35,10 @@ namespace Engine
 		if (m_player)
 		{
 			delete m_player;
+		}
+		if (m_asteroid)
+		{
+			delete m_asteroid;
 		}
 
 		CleanupSDL();
@@ -91,24 +97,16 @@ namespace Engine
 		switch (keyBoardEvent.keysym.scancode)
 		{
 		case SDL_SCANCODE_W:
-			SDL_Log("Going up!");
-			m_player->Move(
-				Engine::Math::Vector2(0.0f, movingUnit));
+			SDL_Log("Moving forward!");
+			m_player->MoveForward();
 			break;
 		case SDL_SCANCODE_A:
-			SDL_Log("Going left!");
-			m_player->Move(
-				Engine::Math::Vector2(-movingUnit, 0.0f));
+			SDL_Log("Rotating left!");
+			m_player->RotateLeft();
 			break;
 		case SDL_SCANCODE_D:
-			SDL_Log("Going right!");
-			m_player->Move(
-				Engine::Math::Vector2(movingUnit, 0.0f));
-			break;
-		case SDL_SCANCODE_S:
-			SDL_Log("Going down!");
-			m_player->Move(
-				Engine::Math::Vector2(0.0f, -movingUnit));
+			SDL_Log("Rotating right!");
+			m_player->RotateRight();
 			break;
 		default:			
 			SDL_Log("Physical %s key acting as %s key",
@@ -122,6 +120,9 @@ namespace Engine
 	{
 		switch (keyBoardEvent.keysym.scancode)
 		{
+		case SDL_SCANCODE_W:
+			m_player->notMoving();
+			break;
 		case SDL_SCANCODE_ESCAPE:
 			OnExit();
 			break;
@@ -137,6 +138,9 @@ namespace Engine
 
 		// Update code goes here
 		//
+
+		m_player->Update(DESIRED_FRAME_TIME);
+		m_asteroid->Update(DESIRED_FRAME_TIME);
 
 		double endTime = m_timer->GetElapsedTimeInSeconds();
 		double nextTimeFrame = startTime + DESIRED_FRAME_TIME;
@@ -166,6 +170,7 @@ namespace Engine
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		m_player->Render();// Loads the identity matrix
+		m_asteroid->Render();
 		
 		SDL_GL_SwapWindow(m_mainWindow);
 	}

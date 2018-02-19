@@ -18,8 +18,12 @@
     <ClCompile Include="Vector4.cpp">
       <Filter>Engine\Source files\Math</Filter>
     </ClCompile>
-    <ClCompile Include="MathUtilities.cpp" />
     <ClCompile Include="Color.cpp" />
+    <ClCompile Include="MathUtilities.cpp">
+      <Filter>Engine\Source files\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="Asteroid.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.hpp" />
@@ -40,8 +44,12 @@
     <ClInclude Include="Vector4.hpp">
       <Filter>Engine\Header files\Math</Filter>
     </ClInclude>
-    <ClInclude Include="MathUtilities.h" />
-    <ClInclude Include="Color.h" />
+    <ClInclude Include="MathUtilities.hpp">
+      <Filter>Engine\Header files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Color.hpp" />
+    <ClInclude Include="Entity.hpp" />
+    <ClInclude Include="Asteroid.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">

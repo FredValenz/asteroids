@@ -12,7 +12,8 @@
 
 //
 #include "Player.hpp"
-#include "Color.h"
+#include"Asteroid.hpp"
+#include "Color.hpp"
 
 namespace Engine
 {
@@ -61,7 +62,8 @@ namespace Engine
 		/* =============================================================
 		 * MEMBERS
 		 * ============================================================= */
-		Game::Player*						m_player;
+		Asteroids::Entities::Player*		m_player;
+		Asteroids::Entities::Asteroid*		m_asteroid;
 		int									m_width;
 		int									m_height;
 		int									m_nUpdates;
@@ -75,4 +77,4 @@ namespace Engine
 
 			};
 }
-#endif /* GAME_HPP */
+#endif
