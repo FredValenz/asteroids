@@ -1,4 +1,10 @@
 #pragma once
+
+namespace Const
+{
+	const float PI = 3.14159265f;
+}
+
 namespace Engine {
 
 	namespace Math {

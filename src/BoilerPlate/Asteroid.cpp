@@ -7,9 +7,11 @@ namespace Asteroids
 	{
 		Asteroid::Asteroid(int width, int height)
 		{
-			m_position = new Engine::Math::Vector2(Engine::Math::Vector2::Origin);
+			m_position = Engine::Math::Vector2(Engine::Math::Vector2::Origin);
 			m_width = width;
 			m_height = height;
+			m_size = AsteroidSize::SMALL;
+			sizeFactor();
 		}
 
 		Asteroid::~Asteroid(){}
@@ -19,8 +21,7 @@ namespace Asteroids
 			glLoadIdentity();
 
 			// Translates a vector
-			glTranslatef(m_position->x, m_position->y, 0.0f);
-
+			glTranslatef(m_position.x, m_position.y, 0.0f);
 
 			// Draws an asteroid
 			glBegin(GL_LINE_LOOP);
@@ -52,7 +53,13 @@ namespace Asteroids
 
 		void Asteroid::Update(float deltaTime)
 		{
-			m_angle += 120.0f + deltaTime;
+			ApplyImpulse();
+
+			m_velocity = Engine::Math::Vector2(m_velocity.x * Constants::DRAG, m_velocity.y * Constants::DRAG);
+
+			Engine::Math::Vector2 pos = m_position + m_velocity;
+
+			m_position = pos;
 			Entity::Update(deltaTime);
 		}
 
@@ -60,5 +67,14 @@ namespace Asteroids
 		{
 			return m_size;
 		}
+
+		void Asteroid::sizeFactor()
+		{
+			if (m_size == AsteroidSize::BIG) { m_radius = 40.f; m_mass = 3.f; };
+
+			if (m_size == AsteroidSize::MEDIUM) { m_radius = 20.f; m_mass = 2.5f; };
+
+			if (m_size == AsteroidSize::SMALL) { m_radius = 10.f; m_mass = 2.f; };
+		};
 	}
 }

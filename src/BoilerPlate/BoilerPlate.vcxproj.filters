@@ -24,6 +24,7 @@
     </ClCompile>
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Asteroid.cpp" />
+    <ClCompile Include="Bullet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.hpp" />
@@ -50,6 +51,7 @@
     <ClInclude Include="Color.hpp" />
     <ClInclude Include="Entity.hpp" />
     <ClInclude Include="Asteroid.hpp" />
+    <ClInclude Include="Bullet.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">

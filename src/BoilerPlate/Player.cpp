@@ -13,12 +13,14 @@ namespace Asteroids
 		{
 			m_radius = 0.0f;
 			m_position = Engine::Math::Vector2(Engine::Math::Vector2::Origin);
+			m_angleInRads = Engine::Math::MathUtilities::degreeToRad(m_angle+ Constants::ANGLE_OFFSET);
 
 			m_width = width + 50.0f;
 			m_height = height + 50.0f;
 			m_mass = 0.5f;
 		}
 
+		
 		void Player::Update(float deltaTime)
 		{
 			if (!m_moving) m_thruster = false;
@@ -26,6 +28,8 @@ namespace Asteroids
 			m_velocity = Engine::Math::Vector2(m_velocity.x * Constants::DRAG, m_velocity.y * Constants::DRAG);
 
 			Engine::Math::Vector2 pos = m_position + m_velocity;
+
+			m_position = pos;
 
 			Entity::Update(deltaTime);
 		}
@@ -90,13 +94,13 @@ namespace Asteroids
 		void Player::RotateRight()
 		{
 			m_angle += -5.0f;
-			Engine::Math::MathUtilities::degreeToRad(m_angle);
+			m_angleInRads = Engine::Math::MathUtilities::degreeToRad(m_angle);
 		}
 
 		void Player::RotateLeft()
 		{
 			m_angle += 5.0f;
-			Engine::Math::MathUtilities::degreeToRad(m_angle);
+			m_angleInRads = Engine::Math::MathUtilities::degreeToRad(m_angle);
 		}
 	}
 

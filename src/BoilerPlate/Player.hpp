@@ -28,6 +28,7 @@ namespace Asteroids
 			void RotateRight();
 			void RotateLeft();
 			void notMoving() { m_moving = false; };
+			void ApplyImpulse() override { m_velocity += Impulse(); };
 
 		private:
 
@@ -38,8 +39,11 @@ namespace Asteroids
 			Engine::Math::Vector2 m_velocity;
 			Engine::Math::Vector2 m_position;
 			float m_angle;
+			float m_angleInRads;
 			bool m_thruster;
 			bool m_moving;
+
+
 		};
 	}
 	

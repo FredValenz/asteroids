@@ -5,6 +5,8 @@
 #include "Vector2.hpp"
 #include <iostream>
 #include "MathUtilities.hpp"
+#include "Color.hpp"
+#include <cmath>
 
 namespace Constants
 {
@@ -32,7 +34,7 @@ namespace Asteroids
 			* ==========================*/
 			void Update(float);
 			void Render();
-			float warp(float, float, float);
+			void warp();
 
 		protected:
 
@@ -40,7 +42,7 @@ namespace Asteroids
 			* PRIVATE FUNCTIONS
 			* ==========================*/
 			Engine::Math::Vector2 Impulse();
-			void ApplyImpulse() { m_velocity += Impulse(); };
+			virtual void ApplyImpulse() { m_velocity += Impulse(); };
 
 
 			/* ==========================
@@ -58,6 +60,7 @@ namespace Asteroids
 			float m_angleInRads;
 			float m_mass;
 			float m_radius;
+			Color m_color;
 		};
 	}
 }

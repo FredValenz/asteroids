@@ -36,16 +36,18 @@ namespace Asteroids
 			void Render();
 			void Update(float);
 			AsteroidSize::SIZE getSize();
+			void sizeFactor();
 
 
 			/* ==========================
 			* MEMBERS
 			* ==========================*/
-			Engine::Math::Vector2* m_position;
+			Engine::Math::Vector2 m_position;
 			float m_width;
 			float m_height;
 			Asteroid::AsteroidSize::SIZE m_size;
 			float m_angle;
+			float m_radius;
 		};
 	}
 }
